@@ -74,7 +74,10 @@ const Ayat = ({ ayat }: Props) => {
             let styledNumber;
             if (charType === "end") {
               styledNumber = (
-                <div className="w-10 h-10 border-2 border-black dark:border-white dark:border-opacity-75 bg-transparent p-2 relative flex justify-center items-center rounded-full mr-4">
+                <div
+                  key={index}
+                  className="w-10 h-10 border-2 border-black dark:border-white dark:border-opacity-75 bg-transparent p-2 relative flex justify-center items-center rounded-full mr-4"
+                >
                   <p className="absolute text-2xl">{char.text}</p>
                 </div>
               );
