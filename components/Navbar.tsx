@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
@@ -8,7 +8,23 @@ import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 
 const Navbar = () => {
+  const [switchValue, setSwitchValue] = useState<boolean>(false);
   const { setTheme } = useTheme();
+
+  useEffect(() => {
+    const storedThemeState = localStorage.getItem("darkMode");
+
+    if (storedThemeState && storedThemeState === "on") {
+      setSwitchValue(true);
+    }
+    if (storedThemeState && storedThemeState === "off") {
+      setSwitchValue(false);
+    }
+    if (!storedThemeState) {
+      setTheme("dark");
+    }
+  }, []);
+
   return (
     <header>
       <nav className="flex justify-between items-center mt-8 my-12">
@@ -21,14 +37,15 @@ const Navbar = () => {
             onCheckedChange={(e) => {
               if (e) {
                 setTheme("dark");
-                // localStorage.setItem("darkMode", "on");
-                // setCheckedValue(true);
+                localStorage.setItem("darkMode", "on");
+                setSwitchValue(true);
               } else {
                 setTheme("light");
-                // localStorage.setItem("darkMode", "off");
-                // setCheckedValue(false);
+                localStorage.setItem("darkMode", "off");
+                setSwitchValue(false);
               }
             }}
+            checked={switchValue}
           />
           <Label htmlFor="dark-mode">Dark Mode</Label>
         </div>

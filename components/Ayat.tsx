@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Scheherazade_New } from "next/font/google";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { Bookmark } from "lucide-react";
+import { Bookmark, PlayIcon, PauseIcon } from "lucide-react";
 
 const scheherazadeNew = Scheherazade_New({
   subsets: ["arabic"],
@@ -13,9 +13,8 @@ const scheherazadeNew = Scheherazade_New({
 
 import { Separator } from "./ui/separator";
 import { AyatType } from "@/lib/type";
-import { AppDispatch, RootState } from "@/store/store";
+import { AppDispatch } from "@/store/store";
 import { setBookmark } from "@/store/content-slice";
-import { Button } from "./ui/button";
 
 interface Props {
   ayat: AyatType;
@@ -46,16 +45,28 @@ const Ayat = ({ ayat }: Props) => {
     }
   };
 
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const playAudio = async () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  };
+
   return (
     <div className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 hover:bg-accent hover:text-accent-foreground">
       <div className="flex justify-between">
         <div className="flex flex-col gap-6">
           <h2 className="tracking-widest font-semibold">{ayat.verse_key}</h2>
           <Bookmark
-            fill={bookmarked.includes(ayat.verse_key) ? "black" : "none"}
+            fill={bookmarked.includes(ayat.verse_key) ? "purple" : "none"}
             className="cursor-pointer dark:text-white"
             onClick={handleClick}
+            color="purple"
           />
+          {/* <PlayIcon onClick={playAudio} /> */}
+          {/* <PauseIcon /> */}
+          {/* <audio src={ayat.audio.url} ref={audioRef}></audio> */}
         </div>
         <div dir="rtl" className="flex flex-wrap my-8">
           {ayat.words.map((char, index) => {

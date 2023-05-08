@@ -62,6 +62,10 @@ export interface AyatType {
   sajdah_number?: null;
   page_number: number;
   juz_number: number;
+  audio: {
+    url: string;
+    segments: number[];
+  };
   words: [
     {
       id: number;
