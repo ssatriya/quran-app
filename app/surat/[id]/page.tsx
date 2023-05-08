@@ -32,7 +32,7 @@ const SuratPage = async ({ params }: Props) => {
   return (
     <div>
       {surat?.map((ayat) => (
-        <Ayat ayat={ayat} />
+        <Ayat key={ayat.id} ayat={ayat} />
       ))}
     </div>
   );
