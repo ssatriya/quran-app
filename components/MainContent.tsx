@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -11,12 +11,15 @@ import { AppDispatch, RootState } from "@/store/store";
 import { fetchJuz, fetchSurat, setCurrentType } from "@/store/content-slice";
 import Surat from "./Surat";
 import { Button, buttonVariants } from "./ui/button";
+import Loading from "@/app/loading";
 
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const [contentLoading, setContentLoading] = useState<boolean>(false);
 
   const surat = useSelector((state: RootState) => state.content.surat);
   const juz = useSelector((state: RootState) => state.content.juz);
+  const contentStatus = useSelector((state: RootState) => state.content.status);
   const contentType = useSelector(
     (state: RootState) => state.content.currentContentType
   );
@@ -41,6 +44,15 @@ const MainContent = () => {
     }
   }, [contentType]);
 
+  useEffect(() => {
+    if (contentStatus === "loading") {
+      setContentLoading(true);
+    }
+    if (contentStatus === "succeeded") {
+      setContentLoading(false);
+    }
+  }, [contentStatus]);
+
   return (
     <main>
       <div className="mb-4">
@@ -49,6 +61,7 @@ const MainContent = () => {
           switchHandler={switchHandler}
         />
       </div>
+      {contentLoading && <Loading />}
       <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
         {contentType === "surat" &&
           surat?.chapters.map((surat: SuratsType) => {
