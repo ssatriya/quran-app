@@ -34,6 +34,7 @@ const Navbar = () => {
         </Link>
         <div className="flex justify-center items-center gap-3">
           <Switch
+            title="dark-mode"
             id="dark-mode"
             onCheckedChange={(e) => {
               if (e) {
