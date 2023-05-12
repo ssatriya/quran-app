@@ -5,7 +5,11 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 const ContentSwitch = ({ contentType, switchHandler }: any) => {
   return (
-    <Tabs defaultValue={contentType} onValueChange={switchHandler}>
+    <Tabs
+      defaultValue={contentType}
+      onValueChange={switchHandler}
+      aria-labelledby="quran content switch"
+    >
       <TabsList>
         <TabsTrigger value="surat" aria-labelledby="surat">
           Surat
