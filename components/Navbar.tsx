@@ -22,12 +22,13 @@ const Navbar = () => {
     }
     if (!storedThemeState) {
       setTheme("dark");
+      setSwitchValue(true);
     }
   }, []);
 
   return (
     <header>
-      <nav className="flex justify-between items-center mt-8 my-12">
+      <nav className="flex justify-between items-center pt-14 pb-12">
         <Link href="/" className="text-2xl font-bold leading-6">
           Lite Quran
         </Link>

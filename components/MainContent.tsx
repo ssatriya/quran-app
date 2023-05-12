@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
@@ -10,7 +10,7 @@ import { SuratsType } from "@/lib/type";
 import { AppDispatch, RootState } from "@/store/store";
 import { fetchJuz, fetchSurat, setCurrentType } from "@/store/content-slice";
 import Surat from "./Surat";
-import { Button, buttonVariants } from "./ui/button";
+import { buttonVariants } from "./ui/button";
 import Loading from "@/app/loading";
 
 const MainContent = () => {
@@ -64,7 +64,7 @@ const MainContent = () => {
       {contentLoading && <Loading />}
       <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
         {contentType === "surat" &&
-          surat?.chapters.map((surat: SuratsType) => {
+          surat?.chapters.slice(0, 9).map((surat: SuratsType) => {
             return <Surat key={surat.id} surat={surat} />;
           })}
       </div>
