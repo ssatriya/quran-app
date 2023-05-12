@@ -64,7 +64,7 @@ const MainContent = () => {
       {contentLoading && <Loading />}
       <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
         {contentType === "surat" &&
-          surat?.chapters.slice(0, 9).map((surat: SuratsType) => {
+          surat?.chapters.map((surat: SuratsType) => {
             return <Surat key={surat.id} surat={surat} />;
           })}
       </div>
