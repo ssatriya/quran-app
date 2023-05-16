@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AyatType, Audio } from "@/lib/type";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import Ayat from "@/components/Ayat";
 import SuratAudio from "@/components/SuratAudio";
 
@@ -22,11 +22,6 @@ interface SuratType {
 
 const getSuratById = async (id: number) => {
   try {
-    // const res = await axios.get(
-    //   `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`
-    // );
-    // return res.data as SuratType;
-
     const url1 = `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`;
     const url2 = `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`;
 

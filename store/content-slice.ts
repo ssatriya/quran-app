@@ -45,7 +45,6 @@ interface State {
   currentContentType: string;
   status: string;
   error: undefined | object;
-
   bookmarks: string[];
 }
 
@@ -55,7 +54,6 @@ const initialState: State = {
   currentContentType: "surat",
   status: "idle",
   error: undefined,
-
   bookmarks: [],
 };
 
@@ -71,9 +69,7 @@ const contentSlice = createSlice({
 
       if (storedBookmarks) {
         const parsedBookmarks = JSON.parse(storedBookmarks);
-
         state.bookmarks = parsedBookmarks;
-
         const checkBookmark = state.bookmarks.find(
           (bookmark) => bookmark === action.payload
         );
