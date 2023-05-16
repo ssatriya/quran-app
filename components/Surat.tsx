@@ -22,7 +22,14 @@ const Surat = ({ surat }: Props) => {
         </div>
         <div className="flex justify-between items-center gap-1 text-sm text-slate-500 dark:text-white dark:text-opacity-75">
           <div>
-            {surat?.translated_name.name} <span> • </span> {capitalize}
+            {surat?.translated_name.name}{" "}
+            <span className="desktop:inline-block tablet:inline-block mobile:hidden">
+              {" "}
+              •{" "}
+            </span>{" "}
+            <span className="desktop:inline-block tablet:inline-block mobile:hidden">
+              {capitalize}
+            </span>
           </div>
           <div>{surat?.verses_count} Ayat</div>
         </div>

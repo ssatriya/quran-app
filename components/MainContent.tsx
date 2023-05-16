@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useState } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import React, { InputHTMLAttributes, useEffect, useState } from "react";
 import Link from "next/link";
 
-import ContentSwitch from "./ContentSwitch";
+import { useDispatch, useSelector } from "react-redux";
+
 import { SuratsType } from "@/lib/type";
 import { AppDispatch, RootState } from "@/store/store";
 import { fetchJuz, fetchSurat, setCurrentType } from "@/store/content-slice";
@@ -14,6 +13,7 @@ import { buttonVariants } from "./ui/button";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import Loading from "@/app/loading";
 import { TabsContent } from "@radix-ui/react-tabs";
+import { Input } from "./ui/input";
 
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -57,17 +57,14 @@ const MainContent = () => {
 
   return (
     <main>
-      {/* <div className="mb-4"> */}
-      {/* <ContentSwitch
-          contentType={contentType}
-          switchHandler={switchHandler}
-        /> */}
+      {/* <div className="mb-3">
+        <Input type="text" onChange={handleSearch} />
+      </div> */}
       <Tabs defaultValue={contentType} onValueChange={switchHandler}>
         <TabsList className="mb-4">
           <TabsTrigger value="surat">Surat</TabsTrigger>
           <TabsTrigger value="juz">Juz</TabsTrigger>
         </TabsList>
-        {/* </div> */}
         <TabsContent value="surat">
           {contentLoading && <Loading />}
           <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
@@ -83,7 +80,7 @@ const MainContent = () => {
               return (
                 <div
                   key={juz.id}
-                  className="p-3 border border-slate-200 dark:border-accent rounded-md my-2 w-full"
+                  className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 w-full"
                 >
                   <div className="flex justify-between items-center">
                     <Link

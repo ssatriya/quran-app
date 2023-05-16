@@ -88,3 +88,12 @@ export interface AyatType {
     }
   ];
 }
+
+export interface Audio {
+  id: number;
+  chapter_id: number;
+  file_size: number;
+  format: string;
+  audio_url: string;
+  timestamps: [];
+}
