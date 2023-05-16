@@ -1,6 +1,6 @@
 "use client";
 
-import React, { InputHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
