@@ -53,6 +53,10 @@ const Ayat = ({ ayat }: Props) => {
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  const audioStatusHandler = () => {
+    setAudioPlayed(false);
+  };
+
   const audioHandler = async () => {
     if (audioPlayed) {
       if (audioRef.current) {
@@ -87,6 +91,7 @@ const Ayat = ({ ayat }: Props) => {
         <audio
           src={`https://verses.quran.com/${ayat.audio.url}`}
           ref={audioRef}
+          onEnded={audioStatusHandler}
         ></audio>
       </>
     );
