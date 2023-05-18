@@ -131,7 +131,7 @@ const Ayat = ({ ayat }: Props) => {
             return (
               <div
                 key={index}
-                className={`desktop:text-4xl tablet:text-4xl mobile:text-3xl mb-8 mt-3 rtl:mr-3 ${scheherazadeNew.className}`}
+                className={`desktop:text-4xl tablet:text-4xl mobile:text-3xl mb-8 mt-3 rtl:mr-3 `}
               >
                 {charType === "word" && char.text} {styledNumber}
               </div>

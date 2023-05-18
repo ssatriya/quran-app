@@ -1,25 +1,40 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { PlayIcon, PauseIcon } from "lucide-react";
+import { PlayIcon, PauseIcon, Loader2 } from "lucide-react";
 
-import { Audio } from "@/lib/type";
+import { SuratAudio } from "@/lib/type";
 import { Button } from "./ui/button";
+import axios from "axios";
 
 type Props = {
-  audio: Audio;
+  suratId: number;
 };
 
-const SuratAudio = ({ audio }: Props) => {
+const SuratAudio = ({ suratId }: Props) => {
   const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
+  const [audioURL, setAudioURL] = useState<string>("");
+  const [audioLoading, setAudioLoading] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    setAudioLoading(true);
+    const fetchAudio = async (id: number) => {
+      const response = await axios.get(
+        `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`
+      );
+      const data = response.data as SuratAudio;
+
+      setAudioURL(data.audio_file.audio_url);
+      setAudioLoading(false);
+    };
+    fetchAudio(suratId);
+  }, [suratId]);
 
   const audioStatusHandler = () => {
     setAudioPlayed(false);
   };
-
-  const audioURL = audio.audio_url;
 
   const audioHandler = async () => {
     if (audioPlayed) {
@@ -37,7 +52,8 @@ const SuratAudio = ({ audio }: Props) => {
 
   return (
     <div className="mb-4 flex justify-end">
-      <Button variant="outline" onClick={audioHandler}>
+      <Button variant="outline" onClick={audioHandler} disabled={audioLoading}>
+        {audioLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {!audioPlayed ? (
           <PlayIcon className="cursor-pointer" />
         ) : (
@@ -45,11 +61,13 @@ const SuratAudio = ({ audio }: Props) => {
         )}{" "}
         <span className="ml-2">Putar Audio</span>
       </Button>
-      <audio
-        src={`${audioURL}`}
-        onEnded={audioStatusHandler}
-        ref={audioRef}
-      ></audio>
+      {audioURL !== "" ? (
+        <audio
+          src={`${audioURL}`}
+          onEnded={audioStatusHandler}
+          ref={audioRef}
+        ></audio>
+      ) : null}
     </div>
   );
 };
