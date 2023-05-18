@@ -52,15 +52,24 @@ const SuratAudio = ({ suratId }: Props) => {
 
   return (
     <div className="mb-4 flex justify-end">
-      <Button variant="outline" onClick={audioHandler} disabled={audioLoading}>
-        {audioLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-        {!audioPlayed ? (
-          <PlayIcon className="cursor-pointer" />
-        ) : (
-          <PauseIcon className="cursor-pointer" />
-        )}{" "}
-        <span className="ml-2">Putar Audio</span>
-      </Button>
+      {audioLoading ? (
+        <Button variant="outline">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Memuat Audio
+        </Button>
+      ) : (
+        <Button
+          variant="outline"
+          onClick={audioHandler}
+          disabled={audioLoading}
+        >
+          {!audioPlayed ? (
+            <PlayIcon className="cursor-pointer" />
+          ) : (
+            <PauseIcon className="cursor-pointer" />
+          )}{" "}
+          <span className="ml-2">{!audioPlayed ? "Putar" : "Jeda"} Audio</span>
+        </Button>
+      )}
       {audioURL !== "" ? (
         <audio
           src={`${audioURL}`}
