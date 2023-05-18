@@ -2,7 +2,6 @@ import React from "react";
 import axios, { AxiosError } from "axios";
 
 import { AyatType } from "@/lib/type";
-import Ayat from "@/components/Ayat";
 import Juz from "@/components/Juz";
 
 interface Props {

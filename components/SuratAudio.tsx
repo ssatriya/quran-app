@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import { PlayIcon, PauseIcon, Loader2 } from "lucide-react";
+import { PlayIcon, PauseIcon } from "lucide-react";
 
 import { SuratAudio } from "@/lib/type";
 import { Button } from "./ui/button";
@@ -15,21 +15,25 @@ type Props = {
 const SuratAudio = ({ suratId }: Props) => {
   const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
   const [audioURL, setAudioURL] = useState<string>("");
-  const [audioLoading, setAudioLoading] = useState<boolean>(false);
+  const [audioLoading, setAudioLoading] = useState<boolean>(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    setAudioLoading(true);
+    let timeout: string | number | NodeJS.Timeout | undefined;
     const fetchAudio = async (id: number) => {
       const response = await axios.get(
         `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`
       );
       const data = response.data as SuratAudio;
 
-      setAudioURL(data.audio_file.audio_url);
-      setAudioLoading(false);
+      timeout = setTimeout(() => {
+        setAudioURL(data.audio_file.audio_url);
+        setAudioLoading(false);
+      }, 2000);
     };
     fetchAudio(suratId);
+
+    return () => clearTimeout(timeout);
   }, [suratId]);
 
   const audioStatusHandler = () => {
@@ -52,24 +56,15 @@ const SuratAudio = ({ suratId }: Props) => {
 
   return (
     <div className="mb-4 flex justify-end">
-      {audioLoading ? (
-        <Button variant="outline">
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Memuat Audio
-        </Button>
-      ) : (
-        <Button
-          variant="outline"
-          onClick={audioHandler}
-          disabled={audioLoading}
-        >
-          {!audioPlayed ? (
-            <PlayIcon className="cursor-pointer" />
-          ) : (
-            <PauseIcon className="cursor-pointer" />
-          )}{" "}
-          <span className="ml-2">{!audioPlayed ? "Putar" : "Jeda"} Audio</span>
-        </Button>
-      )}
+      <Button variant="outline" onClick={audioHandler} disabled={audioLoading}>
+        {!audioPlayed ? (
+          <PlayIcon className="cursor-pointer" />
+        ) : (
+          <PauseIcon className="cursor-pointer" />
+        )}{" "}
+        <span className="ml-2">{!audioPlayed ? "Putar" : "Jeda"} Audio</span>
+      </Button>
+
       {audioURL !== "" ? (
         <audio
           src={`${audioURL}`}

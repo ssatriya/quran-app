@@ -1,6 +1,6 @@
-"use client";
+// "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+// import React, { useEffect, useRef, useState } from "react";
 import { Scheherazade_New } from "next/font/google";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,103 +13,22 @@ const scheherazadeNew = Scheherazade_New({
 
 import { Separator } from "./ui/separator";
 import { AyatType } from "@/lib/type";
-import { AppDispatch, RootState } from "@/store/store";
-import { setBookmark } from "@/store/content-slice";
-import { Button } from "./ui/button";
+import AyatPropertyButton from "./AyatProperty/AyatPropertyButton";
 
 interface Props {
   ayat: AyatType;
 }
 
 const Ayat = ({ ayat }: Props) => {
-  const dispatch = useDispatch<AppDispatch>();
-  const [bookmarked, setbookmarked] = useState<string[]>([]);
-  const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
-
-  const contentType = useSelector(
-    (state: RootState) => state.content.currentContentType
-  );
-
-  useEffect(() => {
-    const storedBookmark = localStorage.getItem("bookmarks");
-    if (storedBookmark) {
-      const parsedBookmark = JSON.parse(storedBookmark);
-      setbookmarked(parsedBookmark);
-    }
-  }, []);
-
-  const handleClick = () => {
-    dispatch(setBookmark(ayat.verse_key));
-
-    if (bookmarked.find((bookmark) => bookmark === ayat.verse_key)) {
-      const updatedBookmark = bookmarked.filter(
-        (bookmark) => bookmark !== ayat.verse_key
-      );
-      setbookmarked(updatedBookmark);
-    } else {
-      setbookmarked((prev) => [...prev, ayat.verse_key]);
-    }
-  };
-
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  const audioStatusHandler = () => {
-    setAudioPlayed(false);
-  };
-
-  const audioHandler = async () => {
-    if (audioPlayed) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        setAudioPlayed(false);
-      }
-    } else {
-      if (audioRef.current) {
-        audioRef.current.play();
-        setAudioPlayed(true);
-      }
-    }
-  };
-
-  let audioButton;
-
-  if (ayat.audio?.url) {
-    audioButton = (
-      <>
-        <Button
-          variant="outline"
-          size="sm"
-          className="mb-4"
-          onClick={audioHandler}
-        >
-          {!audioPlayed ? (
-            <PlayIcon className="cursor-pointer" />
-          ) : (
-            <PauseIcon className="cursor-pointer" />
-          )}
-        </Button>
-        <audio
-          src={`https://verses.quran.com/${ayat.audio.url}`}
-          ref={audioRef}
-          onEnded={audioStatusHandler}
-        ></audio>
-      </>
-    );
-  }
-
   return (
     <div className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2">
       <div className="flex justify-between">
         <div className="flex flex-col gap-5 items-center mr-6">
           <h2 className="tracking-widest font-semibold">{ayat.verse_key}</h2>
-          <Button variant="outline" size="sm" onClick={handleClick}>
-            <Bookmark
-              fill={bookmarked.includes(ayat.verse_key) ? "purple" : "none"}
-              className="cursor-pointer dark:text-white"
-              color="purple"
-            />
-          </Button>
-          {audioButton}
+          <AyatPropertyButton
+            ayatVerseKey={ayat.verse_key}
+            audioUrl={ayat.audio?.url}
+          />
         </div>
         <div dir="rtl" className="flex flex-wrap my-8">
           {ayat.words.map((char, index) => {
@@ -152,7 +71,8 @@ const Ayat = ({ ayat }: Props) => {
               key={index}
               className="text-gray-600 dark:text-white dark:text-opacity-75"
             >
-              {capitalize}
+              {/* {capitalize} */}
+              {char.translation.text}
             </p>
           );
         })}
