@@ -20,6 +20,8 @@ interface Surat {
   chapters: SuratsType[];
 }
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const response = await axios.get(
     "https://api.quran.com/api/v4/chapters?language=en"

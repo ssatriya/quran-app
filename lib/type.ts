@@ -117,3 +117,14 @@ export interface SuratInfo {
     };
   };
 }
+
+export interface AllJuz {
+  id: number;
+  juz_number: number;
+  verse_mapping: {
+    [id: number]: string;
+  };
+  first_verse_id: number;
+  last_verse_id: number;
+  verses_count: number;
+}
