@@ -44,7 +44,7 @@ const MainContent = () => {
       dispatch(fetchJuz(null));
       dispatch(setCurrentType("juz"));
     }
-  }, [contentType]);
+  }, [contentType, dispatch, juz, surat]);
 
   useEffect(() => {
     if (contentStatus === "loading") {

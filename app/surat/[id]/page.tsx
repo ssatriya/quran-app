@@ -4,16 +4,33 @@ import { AyatType, SuratInfo } from "@/lib/type";
 import axios, { AxiosError } from "axios";
 import Ayat from "@/components/Ayat";
 import SuratAudio from "@/components/SuratAudio";
+import { SuratsType } from "@/lib/type";
 
 interface Props {
   params: {
-    id: number;
+    id: string;
   };
 }
 
 interface SuratType {
   verses: AyatType[];
 }
+
+interface Surat {
+  chapters: SuratsType[];
+}
+
+export async function generateStaticParams() {
+  const response = await axios.get(
+    "https://api.quran.com/api/v4/chapters?language=en"
+  );
+  const surat = response.data as Surat;
+
+  return surat.chapters.map((s) => ({
+    id: s.id.toString(),
+  }));
+}
+
 export async function generateMetadata({ params }: Props) {
   const response = await axios.get(
     `https://api.quran.com/api/v4/chapters/${params.id}?language=id`
@@ -25,7 +42,7 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-const getSuratById = async (id: number) => {
+const getSuratById = async (id: string) => {
   try {
     const response = await axios.get(
       `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`
@@ -38,11 +55,13 @@ const getSuratById = async (id: number) => {
 };
 
 const SuratPage = async ({ params }: Props) => {
-  const data = await getSuratById(params.id);
+  const { id } = params;
+
+  const data = await getSuratById(id);
   const surat = data?.verses;
   return (
     <div>
-      <SuratAudio suratId={params.id} />
+      <SuratAudio suratId={id} />
       {surat?.map((ayat) => (
         <Ayat key={ayat.id} ayat={ayat} />
       ))}

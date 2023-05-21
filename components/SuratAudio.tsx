@@ -9,7 +9,7 @@ import { Button } from "./ui/button";
 import axios from "axios";
 
 type Props = {
-  suratId: number;
+  suratId: string;
 };
 
 const SuratAudio = ({ suratId }: Props) => {
@@ -20,7 +20,7 @@ const SuratAudio = ({ suratId }: Props) => {
 
   useEffect(() => {
     let timeout: string | number | NodeJS.Timeout | undefined;
-    const fetchAudio = async (id: number) => {
+    const fetchAudio = async (id: string) => {
       const response = await axios.get(
         `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`
       );
