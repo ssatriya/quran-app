@@ -65,7 +65,7 @@ const SuratPage = async ({ params }: Props) => {
     <div>
       <SuratAudio suratId={id} />
       {surat?.map((ayat) => (
-        <Ayat key={ayat.id} ayat={ayat} id={id} />
+        <Ayat key={ayat.id} ayat={ayat} />
       ))}
     </div>
   );
