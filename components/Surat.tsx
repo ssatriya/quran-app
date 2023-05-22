@@ -14,7 +14,7 @@ const Surat = ({ surat }: Props) => {
   );
 
   return (
-    <Link href={`/surat/${surat?.id}`}>
+    <Link href={`/surat/${surat?.id}`} as={`/surat/${surat?.id}`}>
       <div className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 hover:bg-accent hover:text-accent-foreground">
         <div className="flex justify-between items-center mb-6">
           <h2 className="font-semibold text-lg">{surat?.name_simple}</h2>

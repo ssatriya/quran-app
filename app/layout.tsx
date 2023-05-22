@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Quran App",
+  title: "Baca Quran",
   description: "Baca Quran Online",
 };
 
@@ -23,9 +23,9 @@ export default function RootLayout({
         <Container>
           <Providers>
             <Navbar />
-            {children}
+            <main>{children}</main>
+            <Footer />
           </Providers>
-          <Footer />
         </Container>
       </body>
     </html>

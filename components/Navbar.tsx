@@ -24,7 +24,7 @@ const Navbar = () => {
       setTheme("dark");
       setSwitchValue(true);
     }
-  }, []);
+  }, [setTheme]);
 
   return (
     <header>

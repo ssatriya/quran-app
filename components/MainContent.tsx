@@ -44,7 +44,7 @@ const MainContent = () => {
       dispatch(fetchJuz(null));
       dispatch(setCurrentType("juz"));
     }
-  }, [contentType]);
+  }, [contentType, dispatch, juz, surat]);
 
   useEffect(() => {
     if (contentStatus === "loading") {
@@ -56,7 +56,7 @@ const MainContent = () => {
   }, [contentStatus]);
 
   return (
-    <main>
+    <div>
       {/* <div className="mb-3">
         <Input type="text" onChange={handleSearch} />
       </div> */}
@@ -107,7 +107,7 @@ const MainContent = () => {
             })}
         </TabsContent>
       </Tabs>
-    </main>
+    </div>
   );
 };
 
