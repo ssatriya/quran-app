@@ -25,10 +25,10 @@ const Ayat = ({ ayat }: Props) => {
       <div className="flex justify-between">
         <div className="flex flex-col gap-5 items-center mr-6">
           <h2 className="tracking-widest font-semibold">{ayat.verse_key}</h2>
-          {/* <AyatPropertyButton
+          <AyatPropertyButton
             ayatVerseKey={ayat.verse_key}
             audioUrl={ayat.audio?.url}
-          /> */}
+          />
         </div>
         <div dir="rtl" className="flex flex-wrap my-8">
           {ayat.words.map((char, index) => {
