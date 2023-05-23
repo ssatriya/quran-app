@@ -19,21 +19,25 @@ const SuratAudio = ({ suratId }: Props) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    let timeout: string | number | NodeJS.Timeout | undefined;
+    const controller = new AbortController();
+
     const fetchAudio = async (id: string) => {
       const response = await axios.get(
-        `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`
+        `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`,
+        {
+          signal: controller.signal,
+        }
       );
       const data = response.data as SuratAudio;
 
-      timeout = setTimeout(() => {
-        setAudioURL(data.audio_file.audio_url);
-        setAudioLoading(false);
-      }, 2000);
+      setAudioURL(data.audio_file.audio_url);
+      setAudioLoading(false);
     };
     fetchAudio(suratId);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      controller.abort();
+    };
   }, [suratId]);
 
   const audioStatusHandler = () => {
