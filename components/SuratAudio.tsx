@@ -22,16 +22,24 @@ const SuratAudio = ({ suratId }: Props) => {
     const controller = new AbortController();
 
     const fetchAudio = async (id: string) => {
-      const response = await axios.get(
-        `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`,
-        {
-          signal: controller.signal,
-        }
-      );
-      const data = response.data as SuratAudio;
+      try {
+        const response = await axios.get(
+          `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`,
+          {
+            signal: controller.signal,
+          }
+        );
+        const data = response.data as SuratAudio;
 
-      setAudioURL(data.audio_file.audio_url);
-      setAudioLoading(false);
+        setAudioURL(data.audio_file.audio_url);
+        setAudioLoading(false);
+      } catch (error: any) {
+        if (axios.isCancel(error)) {
+          console.log("Axios request aborted.");
+        } else {
+          console.log(error);
+        }
+      }
     };
     fetchAudio(suratId);
 

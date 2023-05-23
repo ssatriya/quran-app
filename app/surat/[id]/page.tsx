@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { AyatType, SuratInfo } from "@/lib/type";
 import axios, { AxiosError } from "axios";
@@ -70,10 +70,12 @@ const SuratPage = async ({ params }: Props) => {
   const surat = data?.verses;
   return (
     <div>
-      <SuratAudio suratId={id} />
-      {surat?.map((ayat) => (
-        <Ayat key={ayat.id} ayat={ayat} />
-      ))}
+      <Suspense fallback={<p>Loading...</p>}>
+        <SuratAudio suratId={id} />
+        {surat?.map((ayat) => (
+          <Ayat key={ayat.id} ayat={ayat} />
+        ))}
+      </Suspense>
     </div>
   );
 };
