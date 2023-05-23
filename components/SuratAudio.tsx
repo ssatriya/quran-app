@@ -19,21 +19,33 @@ const SuratAudio = ({ suratId }: Props) => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    let timeout: string | number | NodeJS.Timeout | undefined;
-    const fetchAudio = async (id: string) => {
-      const response = await axios.get(
-        `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`
-      );
-      const data = response.data as SuratAudio;
+    const controller = new AbortController();
 
-      timeout = setTimeout(() => {
+    const fetchAudio = async (id: string) => {
+      try {
+        const response = await axios.get(
+          `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`,
+          {
+            signal: controller.signal,
+          }
+        );
+        const data = response.data as SuratAudio;
+
         setAudioURL(data.audio_file.audio_url);
         setAudioLoading(false);
-      }, 2000);
+      } catch (error: any) {
+        if (axios.isCancel(error)) {
+          console.log("Axios request aborted.");
+        } else {
+          console.log(error);
+        }
+      }
     };
     fetchAudio(suratId);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      controller.abort();
+    };
   }, [suratId]);
 
   const audioStatusHandler = () => {
