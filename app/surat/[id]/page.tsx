@@ -20,18 +20,18 @@ interface Surat {
   chapters: SuratsType[];
 }
 
-// export const dynamicParams = false;
+export const dynamicParams = false;
 
-// export async function generateStaticParams() {
-//   const response = await axios.get(
-//     "https://api.quran.com/api/v4/chapters?language=en"
-//   );
-//   const surat = response.data as Surat;
+export async function generateStaticParams() {
+  const response = await axios.get(
+    "https://api.quran.com/api/v4/chapters?language=en"
+  );
+  const surat = response.data as Surat;
 
-//   return surat.chapters.map((s) => ({
-//     id: s.id.toString(),
-//   }));
-// }
+  return surat.chapters.map((s) => ({
+    id: s.id.toString(),
+  }));
+}
 
 export async function generateMetadata({ params }: Props) {
   const response = await axios.get(
@@ -44,11 +44,18 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
+const controller = new AbortController();
+
 const getSuratById = async (id: string) => {
   try {
     const response = await axios.get(
-      `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`
+      `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`,
+      {
+        signal: controller.signal,
+      }
     );
+
+    console.log(axios.CancelToken);
     return response.data as SuratType;
   } catch (err) {
     const error = err as AxiosError;
