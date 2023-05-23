@@ -15,6 +15,8 @@ import Loading from "@/app/loading";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Input } from "./ui/input";
 
+import { motion } from "framer-motion";
+
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [contentLoading, setContentLoading] = useState<boolean>(false);
@@ -56,7 +58,10 @@ const MainContent = () => {
   }, [contentStatus]);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+    >
       {/* <div className="mb-3">
         <Input type="text" onChange={handleSearch} />
       </div> */}
@@ -67,18 +72,24 @@ const MainContent = () => {
         </TabsList>
         <TabsContent value="surat">
           {contentLoading && <Loading />}
-          <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3"
+          >
             {contentType === "surat" &&
               surat?.chapters.map((surat: SuratsType) => {
                 return <Surat key={surat.id} surat={surat} />;
               })}
-          </div>
+          </motion.div>
         </TabsContent>
         <TabsContent value="juz">
           {contentType === "juz" &&
             juz?.juzs.map((juz) => {
               return (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   key={juz.id}
                   className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 w-full"
                 >
@@ -102,12 +113,12 @@ const MainContent = () => {
                       return <Surat key={index} surat={suratFromJuz} />;
                     })}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
         </TabsContent>
       </Tabs>
-    </div>
+    </motion.div>
   );
 };
 
