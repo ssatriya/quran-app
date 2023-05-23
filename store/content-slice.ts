@@ -46,6 +46,7 @@ interface State {
   status: string;
   error: undefined | object;
   bookmarks: string[];
+  audioUrl: string;
 }
 
 const initialState: State = {
@@ -55,6 +56,7 @@ const initialState: State = {
   status: "idle",
   error: undefined,
   bookmarks: [],
+  audioUrl: "",
 };
 
 const contentSlice = createSlice({
@@ -89,6 +91,9 @@ const contentSlice = createSlice({
         localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
       }
     },
+    setAudioUrl(state, action) {
+      state.audioUrl = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -121,5 +126,6 @@ const contentSlice = createSlice({
   },
 });
 
-export const { setCurrentType, setBookmark } = contentSlice.actions;
+export const { setCurrentType, setBookmark, setAudioUrl } =
+  contentSlice.actions;
 export default contentSlice.reducer;

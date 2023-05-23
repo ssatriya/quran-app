@@ -7,6 +7,7 @@ import { PlayIcon, PauseIcon } from "lucide-react";
 import { SuratAudio } from "@/lib/type";
 import { Button } from "./ui/button";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type Props = {
   suratId: string;
@@ -17,6 +18,8 @@ const SuratAudio = ({ suratId }: Props) => {
   const [audioURL, setAudioURL] = useState<string>("");
   const [audioLoading, setAudioLoading] = useState<boolean>(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const controller = new AbortController();
@@ -66,8 +69,15 @@ const SuratAudio = ({ suratId }: Props) => {
     }
   };
 
+  const handleClick = () => {
+    router.back();
+  };
+
   return (
-    <div className="mb-4 flex justify-end">
+    <div className="mb-4 flex justify-between">
+      <Button variant="outline" onClick={handleClick}>
+        Kembali
+      </Button>
       <Button variant="outline" onClick={audioHandler} disabled={audioLoading}>
         {!audioPlayed ? (
           <PlayIcon className="cursor-pointer" />

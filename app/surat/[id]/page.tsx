@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import { AyatType, SuratInfo } from "@/lib/type";
 import axios, { AxiosError } from "axios";
@@ -44,18 +44,11 @@ export async function generateMetadata({ params }: Props) {
   };
 }
 
-const controller = new AbortController();
-
 const getSuratById = async (id: string) => {
   try {
     const response = await axios.get(
-      `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`,
-      {
-        signal: controller.signal,
-      }
+      `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`
     );
-
-    console.log(axios.CancelToken);
     return response.data as SuratType;
   } catch (err) {
     const error = err as AxiosError;
@@ -70,12 +63,10 @@ const SuratPage = async ({ params }: Props) => {
   const surat = data?.verses;
   return (
     <div>
-      <Suspense fallback={<p>Loading...</p>}>
-        <SuratAudio suratId={id} />
-        {surat?.map((ayat) => (
-          <Ayat key={ayat.id} ayat={ayat} />
-        ))}
-      </Suspense>
+      <SuratAudio suratId={id} />
+      {surat?.map((ayat) => (
+        <Ayat key={ayat.id} ayat={ayat} />
+      ))}
     </div>
   );
 };
