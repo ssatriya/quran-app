@@ -58,10 +58,7 @@ const MainContent = () => {
   }, [contentStatus]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      animate={{ opacity: 1, scale: 1 }}
-    >
+    <div>
       {/* <div className="mb-3">
         <Input type="text" onChange={handleSearch} />
       </div> */}
@@ -72,24 +69,18 @@ const MainContent = () => {
         </TabsList>
         <TabsContent value="surat">
           {contentLoading && <Loading />}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3"
-          >
+          <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
             {contentType === "surat" &&
               surat?.chapters.map((surat: SuratsType) => {
                 return <Surat key={surat.id} surat={surat} />;
               })}
-          </motion.div>
+          </div>
         </TabsContent>
         <TabsContent value="juz">
           {contentType === "juz" &&
             juz?.juzs.map((juz) => {
               return (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                <div
                   key={juz.id}
                   className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 w-full"
                 >
@@ -113,12 +104,12 @@ const MainContent = () => {
                       return <Surat key={index} surat={suratFromJuz} />;
                     })}
                   </div>
-                </motion.div>
+                </div>
               );
             })}
         </TabsContent>
       </Tabs>
-    </motion.div>
+    </div>
   );
 };
 

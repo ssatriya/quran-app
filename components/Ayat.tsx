@@ -13,7 +13,7 @@ const scheherazadeNew = Scheherazade_New({
 
 import { Separator } from "./ui/separator";
 import { AyatType } from "@/lib/type";
-import AyatPropertyButton from "./AyatProperty/AyatPropertyButton";
+import AyatPropertyButton from "./ayatproperty/AyatPropertyButton";
 
 interface Props {
   ayat: AyatType;
