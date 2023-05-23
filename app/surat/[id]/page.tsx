@@ -20,18 +20,18 @@ interface Surat {
   chapters: SuratsType[];
 }
 
-export const dynamicParams = false;
+// export const dynamicParams = false;
 
-export async function generateStaticParams() {
-  const response = await axios.get(
-    "https://api.quran.com/api/v4/chapters?language=en"
-  );
-  const surat = response.data as Surat;
+// export async function generateStaticParams() {
+//   const response = await axios.get(
+//     "https://api.quran.com/api/v4/chapters?language=en"
+//   );
+//   const surat = response.data as Surat;
 
-  return surat.chapters.map((s) => ({
-    id: s.id.toString(),
-  }));
-}
+//   return surat.chapters.map((s) => ({
+//     id: s.id.toString(),
+//   }));
+// }
 
 export async function generateMetadata({ params }: Props) {
   const response = await axios.get(
