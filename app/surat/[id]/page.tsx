@@ -1,10 +1,7 @@
 import React from "react";
 
-import { AyatType, SuratInfo } from "@/lib/type";
-import axios, { AxiosError } from "axios";
-import Ayat from "@/components/Ayat";
-import SuratAudio from "@/components/SuratAudio";
-import { SuratsType } from "@/lib/type";
+import { SuratInfo } from "@/lib/type";
+import axios from "axios";
 import SuratWrapper from "@/components/wrapper-content/SuratWrapper";
 
 interface Props {

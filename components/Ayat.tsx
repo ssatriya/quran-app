@@ -12,10 +12,8 @@ const scheherazadeNew = Scheherazade_New({
 });
 
 import { Separator } from "./ui/separator";
-import { AyatType, TerjemahanSurat } from "@/lib/type";
-import AyatPropertyButton from "./ayat-property/AyatPropertyButton";
-import { Button } from "./ui/button";
-import { useRef, useState } from "react";
+import { AyatType } from "@/lib/type";
+import { useRef } from "react";
 import AudioButton from "./ayat-property/AudioButton";
 import BookmarkButton from "./ayat-property/BookmarkButton";
 
@@ -24,16 +22,9 @@ interface Props {
   audioHandler: (verseNumber: number, audioUrl: string) => void;
   audioPlayed: boolean;
   currentVerse: number;
-  terjemahan?: string;
 }
 
-const Ayat = ({
-  ayat,
-  audioHandler,
-  audioPlayed,
-  currentVerse,
-  terjemahan,
-}: Props) => {
+const Ayat = ({ ayat, audioHandler, audioPlayed, currentVerse }: Props) => {
   const ayatRef = useRef<HTMLDivElement>(null);
 
   if (currentVerse === ayat.verse_number) {
@@ -92,9 +83,7 @@ const Ayat = ({
         <p
           key={ayat.verse_number + ayat.verse_number}
           className="text-gray-600 dark:text-white dark:text-opacity-75"
-        >
-          {terjemahan}
-        </p>
+        ></p>
       </div>
     </div>
   );

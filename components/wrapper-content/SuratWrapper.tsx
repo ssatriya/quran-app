@@ -97,7 +97,6 @@ const SuratWrapper = ({ suratId }: Props) => {
           audioHandler={audioHandler}
           audioPlayed={audioPlayed}
           currentVerse={currentVerse}
-          terjemahan={terjemahan?.ayahs[index].indoText}
         />
       ))}
       <audio ref={audioRef} onEnded={audioStatusHandler}></audio>
