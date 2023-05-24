@@ -7,50 +7,32 @@ import { PauseIcon, PlayIcon } from "lucide-react";
 
 interface Props {
   audioUrl: string;
+  currentVerse: number;
+  verseNumber: number;
+  audioPlayed: boolean;
+  audioHandler: (verseNumber: number, audioUrl: string) => void;
 }
 
-const AudioButton = ({ audioUrl }: Props) => {
-  const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  const audioHandler = async () => {
-    if (audioPlayed) {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        setAudioPlayed(false);
-      }
-    } else {
-      if (audioRef.current) {
-        audioRef.current.play();
-        setAudioPlayed(true);
-      }
-    }
-  };
-
-  const audioStatusHandler = () => {
-    setAudioPlayed(false);
-  };
-
+const AudioButton = ({
+  audioUrl,
+  currentVerse,
+  verseNumber,
+  audioPlayed,
+  audioHandler,
+}: Props) => {
   return (
-    <>
-      <Button
-        variant="outline"
-        size="sm"
-        className="mb-4"
-        onClick={audioHandler}
-      >
-        {!audioPlayed ? (
-          <PlayIcon className="cursor-pointer" />
-        ) : (
-          <PauseIcon className="cursor-pointer" />
-        )}
-      </Button>
-      <audio
-        src={`https://verses.quran.com/${audioUrl}`}
-        ref={audioRef}
-        onEnded={audioStatusHandler}
-      ></audio>
-    </>
+    <Button
+      variant="outline"
+      size="sm"
+      className="mb-4"
+      onClick={() => audioHandler(verseNumber, audioUrl)}
+    >
+      {currentVerse === verseNumber && audioPlayed ? (
+        <PauseIcon />
+      ) : (
+        <PlayIcon />
+      )}
+    </Button>
   );
 };
 

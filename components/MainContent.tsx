@@ -11,7 +11,6 @@ import { fetchJuz, fetchSurat, setCurrentType } from "@/store/content-slice";
 import Surat from "./Surat";
 import { buttonVariants } from "./ui/button";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import Loading from "@/app/loading";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Input } from "./ui/input";
 
@@ -57,18 +56,21 @@ const MainContent = () => {
     }
   }, [contentStatus]);
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value;
+  };
+
   return (
     <div>
-      {/* <div className="mb-3">
+      <div className="mb-3">
         <Input type="text" onChange={handleSearch} />
-      </div> */}
+      </div>
       <Tabs defaultValue={contentType} onValueChange={switchHandler}>
         <TabsList className="mb-4">
           <TabsTrigger value="surat">Surat</TabsTrigger>
           <TabsTrigger value="juz">Juz</TabsTrigger>
         </TabsList>
         <TabsContent value="surat">
-          {contentLoading && <Loading />}
           <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
             {contentType === "surat" &&
               surat?.chapters.map((surat: SuratsType) => {

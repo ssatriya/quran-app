@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 // import React, { useEffect, useRef, useState } from "react";
 import { Scheherazade_New } from "next/font/google";
@@ -12,23 +12,52 @@ const scheherazadeNew = Scheherazade_New({
 });
 
 import { Separator } from "./ui/separator";
-import { AyatType } from "@/lib/type";
+import { AyatType, TerjemahanSurat } from "@/lib/type";
 import AyatPropertyButton from "./ayat-property/AyatPropertyButton";
+import { Button } from "./ui/button";
+import { useRef, useState } from "react";
+import AudioButton from "./ayat-property/AudioButton";
+import BookmarkButton from "./ayat-property/BookmarkButton";
 
 interface Props {
   ayat: AyatType;
+  audioHandler: (verseNumber: number, audioUrl: string) => void;
+  audioPlayed: boolean;
+  currentVerse: number;
+  terjemahan?: string;
 }
 
-const Ayat = ({ ayat }: Props) => {
+const Ayat = ({
+  ayat,
+  audioHandler,
+  audioPlayed,
+  currentVerse,
+  terjemahan,
+}: Props) => {
+  const ayatRef = useRef<HTMLDivElement>(null);
+
+  if (currentVerse === ayat.verse_number) {
+    ayatRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
   return (
-    <div className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2">
+    <div
+      className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2"
+      ref={ayatRef}
+    >
       <div className="flex justify-between">
-        <div className="flex flex-col gap-5 items-center mr-6">
+        <div className="flex flex-col gap-5 items-center mr-6 mb-4">
           <h2 className="tracking-widest font-semibold">{ayat.verse_key}</h2>
-          <AyatPropertyButton
-            ayatVerseKey={ayat.verse_key}
-            audioUrl={ayat.audio?.url}
-          />
+          <div className="flex flex-col my-2">
+            <AudioButton
+              audioUrl={ayat.audio?.url}
+              verseNumber={ayat.verse_number}
+              audioPlayed={audioPlayed}
+              audioHandler={audioHandler}
+              currentVerse={currentVerse}
+            />
+            <BookmarkButton verseKey={ayat.verse_key} />
+          </div>
         </div>
         <div dir="rtl" className="flex flex-wrap my-8">
           {ayat.words.map((char, index) => {
@@ -50,7 +79,7 @@ const Ayat = ({ ayat }: Props) => {
             return (
               <div
                 key={index}
-                className={`desktop:text-4xl tablet:text-4xl mobile:text-3xl mb-8 mt-3 rtl:mr-3 `}
+                className={`desktop:text-4xl tablet:text-4xl mobile:text-3xl mb-8 mt-3 rtl:mr-3 ${scheherazadeNew.className}`}
               >
                 {charType === "word" && char.text} {styledNumber}
               </div>
@@ -60,22 +89,12 @@ const Ayat = ({ ayat }: Props) => {
       </div>
       <Separator orientation="horizontal" />
       <div className="flex gap-1 flex-wrap mt-3">
-        {ayat.words.slice(0, -1).map((char, index) => {
-          const capitalize = char.translation.text.replace(
-            char.translation.text[0],
-            char.translation.text[0].toUpperCase()
-          );
-
-          return (
-            <p
-              key={index}
-              className="text-gray-600 dark:text-white dark:text-opacity-75"
-            >
-              {/* {capitalize} */}
-              {char.translation.text}
-            </p>
-          );
-        })}
+        <p
+          key={ayat.verse_number + ayat.verse_number}
+          className="text-gray-600 dark:text-white dark:text-opacity-75"
+        >
+          {terjemahan}
+        </p>
       </div>
     </div>
   );

@@ -9,10 +9,10 @@ import { AppDispatch, RootState } from "@/store/store";
 import { setBookmark } from "@/store/content-slice";
 
 interface Props {
-  ayatVerseKey: string;
+  verseKey: string;
 }
 
-const BookmarkButton = ({ ayatVerseKey }: Props) => {
+const BookmarkButton = ({ verseKey }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const [bookmarked, setbookmarked] = useState<string[]>([]);
 
@@ -25,22 +25,22 @@ const BookmarkButton = ({ ayatVerseKey }: Props) => {
   }, []);
 
   const handleClick = () => {
-    dispatch(setBookmark(ayatVerseKey));
+    dispatch(setBookmark(verseKey));
 
-    if (bookmarked.find((bookmark) => bookmark === ayatVerseKey)) {
+    if (bookmarked.find((bookmark) => bookmark === verseKey)) {
       const updatedBookmark = bookmarked.filter(
-        (bookmark) => bookmark !== ayatVerseKey
+        (bookmark) => bookmark !== verseKey
       );
       setbookmarked(updatedBookmark);
     } else {
-      setbookmarked((prev) => [...prev, ayatVerseKey]);
+      setbookmarked((prev) => [...prev, verseKey]);
     }
   };
 
   return (
     <Button variant="outline" size="sm" onClick={handleClick}>
       <Bookmark
-        fill={bookmarked.includes(ayatVerseKey) ? "purple" : "none"}
+        fill={bookmarked.includes(verseKey) ? "purple" : "none"}
         className="cursor-pointer dark:text-white"
         color="purple"
       />

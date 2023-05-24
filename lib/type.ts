@@ -128,3 +128,31 @@ export interface AllJuz {
   last_verse_id: number;
   verses_count: number;
 }
+
+export interface TerjemahanSurat {
+  translationId: string;
+  translationEn: string;
+  asma: string;
+  numberOfAyahs: number;
+  name: string;
+  number: number;
+  typeId: string;
+  typeEn: string;
+  orderNumber: number;
+  ayahs: [
+    {
+      verseId: number;
+      ayahText: string;
+      indoText: string;
+      enText: string;
+      readText: string;
+      audio: string;
+      juz: number;
+      manzil: number;
+      page: number;
+      ruku: number;
+      hizbQuarter: number;
+      sajda: boolean;
+    }
+  ];
+}

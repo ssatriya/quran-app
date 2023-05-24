@@ -4,13 +4,11 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer>
-      <div className="mb-20 py-8 flex gap-4 items-center justify-center">
-        <Github />
-        <Link href="https://github.com/ssatriya/quran-app" target="__blank">
-          Github Repo
-        </Link>
-      </div>
+    <footer className="w-full h-16 flex justify-center items-center gap-4">
+      <Github />
+      <Link href="https://github.com/ssatriya/quran-app" target="__blank">
+        Github Repo
+      </Link>
     </footer>
   );
 };
