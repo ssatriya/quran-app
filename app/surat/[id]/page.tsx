@@ -45,24 +45,10 @@ export async function generateMetadata({ params }: Props) {
 }
 
 const getSuratById = async (id: string) => {
-  let cancelToken;
-
-  // if (typeof cancelToken != typeof undefined) {
-  //   cancelToken.cancel("Operation canceled due to new request.");
-  // }
-
-  cancelToken = axios.CancelToken.source();
-
   try {
     const response = await axios.get(
-      `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`,
-      {
-        cancelToken: cancelToken.token,
-      }
+      `https://api.quran.com/api/v4/verses/by_chapter/${id}?language=id&words=true&word_fields=text_uthmani&audio=1&page=1&per_page=300`
     );
-    console.log(cancelToken.token);
-
-    console.log(axios.CancelToken);
     return response.data as SuratType;
   } catch (err) {
     const error = err as AxiosError;
@@ -77,7 +63,7 @@ const SuratPage = async ({ params }: Props) => {
   const surat = data?.verses;
   return (
     <div>
-      <SuratAudio suratId={id} />
+      {/* <SuratAudio suratId={id} /> */}
       {surat?.map((ayat) => (
         <Ayat key={ayat.id} ayat={ayat} />
       ))}

@@ -7,6 +7,7 @@ import { PlayIcon, PauseIcon } from "lucide-react";
 import { SuratAudio } from "@/lib/type";
 import { Button } from "./ui/button";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type Props = {
   suratId: string;
@@ -18,22 +19,36 @@ const SuratAudio = ({ suratId }: Props) => {
   const [audioLoading, setAudioLoading] = useState<boolean>(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-    let timeout: string | number | NodeJS.Timeout | undefined;
-    const fetchAudio = async (id: string) => {
-      const response = await axios.get(
-        `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`
-      );
-      const data = response.data as SuratAudio;
+  const router = useRouter();
 
-      timeout = setTimeout(() => {
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchAudio = async (id: string) => {
+      try {
+        const response = await axios.get(
+          `https://api.quran.com/api/v4/chapter_recitations/1/${id}?segments=true`,
+          {
+            signal: controller.signal,
+          }
+        );
+        const data = response.data as SuratAudio;
+
         setAudioURL(data.audio_file.audio_url);
         setAudioLoading(false);
-      }, 2000);
+      } catch (error: any) {
+        if (axios.isCancel(error)) {
+          console.log("Axios request aborted.");
+        } else {
+          console.log(error);
+        }
+      }
     };
     fetchAudio(suratId);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      controller.abort();
+    };
   }, [suratId]);
 
   const audioStatusHandler = () => {
@@ -54,8 +69,15 @@ const SuratAudio = ({ suratId }: Props) => {
     }
   };
 
+  const handleClick = () => {
+    router.back();
+  };
+
   return (
-    <div className="mb-4 flex justify-end">
+    <div className="mb-4 flex justify-between">
+      <Button variant="outline" onClick={handleClick}>
+        Kembali
+      </Button>
       <Button variant="outline" onClick={audioHandler} disabled={audioLoading}>
         {!audioPlayed ? (
           <PlayIcon className="cursor-pointer" />

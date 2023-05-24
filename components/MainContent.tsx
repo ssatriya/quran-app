@@ -15,6 +15,8 @@ import Loading from "@/app/loading";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Input } from "./ui/input";
 
+import { motion } from "framer-motion";
+
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [contentLoading, setContentLoading] = useState<boolean>(false);
