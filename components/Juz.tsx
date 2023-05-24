@@ -10,9 +10,9 @@ interface Props {
 const Juz = ({ ayat }: Props) => {
   return (
     <div>
-      {ayat?.map((ayat) => (
+      {/* {ayat?.map((ayat) => (
         <Ayat key={ayat.id} ayat={ayat} />
-      ))}
+      ))} */}
     </div>
   );
 };
