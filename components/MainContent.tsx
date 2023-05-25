@@ -19,6 +19,7 @@ import { Separator } from "./ui/separator";
 import LoadingSpinner from "./LoadingSpinner";
 import Bookmark from "./Bookmark";
 import { Card } from "./ui/card";
+import { Label } from "./ui/label";
 
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -67,7 +68,10 @@ const MainContent = () => {
   return (
     <div>
       <div className="mb-3">
-        <Input type="text" onChange={handleSearch} />
+        <Input type="text" id="search" onChange={handleSearch} />
+        <Label className="sr-only" htmlFor="search">
+          search
+        </Label>
       </div>
       {/* <Bookmark /> */}
       <Tabs defaultValue={contentType} onValueChange={switchHandler}>
@@ -94,7 +98,10 @@ const MainContent = () => {
             {contentType === "juz" &&
               juz?.juzs.map((juz) => {
                 return (
-                  <Card key={juz.id} className="p-3 border mb-2">
+                  <Card
+                    key={juz.id}
+                    className="p-3 border mb-2 dark:bg-background dark:text-gray-300"
+                  >
                     <div className="flex justify-between items-center">
                       <Link
                         href={`/juz/${juz.id}`}
