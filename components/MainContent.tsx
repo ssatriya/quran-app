@@ -15,6 +15,9 @@ import { TabsContent } from "@radix-ui/react-tabs";
 import { Input } from "./ui/input";
 
 import { motion } from "framer-motion";
+import { Separator } from "./ui/separator";
+import LoadingSpinner from "./LoadingSpinner";
+import Bookmark from "./Bookmark";
 
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -65,51 +68,61 @@ const MainContent = () => {
       <div className="mb-3">
         <Input type="text" onChange={handleSearch} />
       </div>
+      {/* <Bookmark /> */}
       <Tabs defaultValue={contentType} onValueChange={switchHandler}>
         <TabsList className="mb-4">
           <TabsTrigger value="surat">Surat</TabsTrigger>
           <TabsTrigger value="juz">Juz</TabsTrigger>
         </TabsList>
-        <TabsContent value="surat">
-          <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
-            {contentType === "surat" &&
-              surat?.chapters.map((surat: SuratsType) => {
-                return <Surat key={surat.id} surat={surat} />;
+        {contentLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <TabsContent value="surat">
+            <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
+              {contentType === "surat" &&
+                surat?.chapters.map((surat: SuratsType) => {
+                  return <Surat key={surat.id} surat={surat} />;
+                })}
+            </div>
+          </TabsContent>
+        )}
+        {contentLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <TabsContent value="juz">
+            {contentType === "juz" &&
+              juz?.juzs.map((juz) => {
+                return (
+                  <div
+                    key={juz.id}
+                    className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 w-full"
+                  >
+                    <div className="flex justify-between items-center">
+                      <Link
+                        href={`/juz/${juz.id}`}
+                        className={buttonVariants({ variant: "ghost" })}
+                      >
+                        Jus {juz.juz_number}
+                      </Link>
+                      <Link
+                        href={`/juz/${juz.id}`}
+                        className={buttonVariants({ variant: "outline" })}
+                      >
+                        Baca Juz
+                      </Link>
+                    </div>
+                    <div className="mt-4">
+                      {Object.keys(juz.verse_mapping).map((verse, index) => {
+                        const suratFromJuz =
+                          surat?.chapters[parseInt(verse) - 1];
+                        return <Surat key={index} surat={suratFromJuz} />;
+                      })}
+                    </div>
+                  </div>
+                );
               })}
-          </div>
-        </TabsContent>
-        <TabsContent value="juz">
-          {contentType === "juz" &&
-            juz?.juzs.map((juz) => {
-              return (
-                <div
-                  key={juz.id}
-                  className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 w-full"
-                >
-                  <div className="flex justify-between items-center">
-                    <Link
-                      href={`/juz/${juz.id}`}
-                      className={buttonVariants({ variant: "ghost" })}
-                    >
-                      Jus {juz.juz_number}
-                    </Link>
-                    <Link
-                      href={`/juz/${juz.id}`}
-                      className={buttonVariants({ variant: "outline" })}
-                    >
-                      Baca Juz
-                    </Link>
-                  </div>
-                  <div className="mt-4">
-                    {Object.keys(juz.verse_mapping).map((verse, index) => {
-                      const suratFromJuz = surat?.chapters[parseInt(verse) - 1];
-                      return <Surat key={index} surat={suratFromJuz} />;
-                    })}
-                  </div>
-                </div>
-              );
-            })}
-        </TabsContent>
+          </TabsContent>
+        )}
       </Tabs>
     </div>
   );

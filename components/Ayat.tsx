@@ -19,12 +19,19 @@ import BookmarkButton from "./ayat-property/BookmarkButton";
 
 interface Props {
   ayat: AyatType;
-  audioHandler: (verseNumber: number, audioUrl: string) => void;
-  audioPlayed: boolean;
-  currentVerse: number;
+  audioHandler?: (verseNumber: number, audioUrl: string) => void;
+  audioPlayed?: boolean;
+  currentVerse?: number;
+  contentType?: string;
 }
 
-const Ayat = ({ ayat, audioHandler, audioPlayed, currentVerse }: Props) => {
+const Ayat = ({
+  ayat,
+  audioHandler,
+  audioPlayed,
+  currentVerse,
+  contentType,
+}: Props) => {
   const ayatRef = useRef<HTMLDivElement>(null);
 
   if (currentVerse === ayat.verse_number) {
@@ -40,13 +47,15 @@ const Ayat = ({ ayat, audioHandler, audioPlayed, currentVerse }: Props) => {
         <div className="flex flex-col gap-5 items-center mr-6 mb-4">
           <h2 className="tracking-widest font-semibold">{ayat.verse_key}</h2>
           <div className="flex flex-col my-2">
-            <AudioButton
-              audioUrl={ayat.audio?.url}
-              verseNumber={ayat.verse_number}
-              audioPlayed={audioPlayed}
-              audioHandler={audioHandler}
-              currentVerse={currentVerse}
-            />
+            {contentType === "surat" && (
+              <AudioButton
+                audioUrl={ayat.audio?.url}
+                verseNumber={ayat.verse_number}
+                audioPlayed={audioPlayed}
+                audioHandler={audioHandler}
+                currentVerse={currentVerse}
+              />
+            )}
             <BookmarkButton verseKey={ayat.verse_key} />
           </div>
         </div>
@@ -80,10 +89,16 @@ const Ayat = ({ ayat, audioHandler, audioPlayed, currentVerse }: Props) => {
       </div>
       <Separator orientation="horizontal" />
       <div className="flex gap-1 flex-wrap mt-3">
-        <p
-          key={ayat.verse_number + ayat.verse_number}
-          className="text-gray-600 dark:text-white dark:text-opacity-75"
-        ></p>
+        {ayat.words.map((terjemahan, index) => {
+          return (
+            <p
+              key={ayat.verse_number + index}
+              className="text-gray-600 dark:text-white dark:text-opacity-75"
+            >
+              {terjemahan.translation.text}
+            </p>
+          );
+        })}
       </div>
     </div>
   );

@@ -8,6 +8,9 @@ import { AyatType, TerjemahanSurat } from "@/lib/type";
 import SkeletonLoading from "../SkeletonLoading";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface Props {
   suratId: string;
@@ -19,6 +22,9 @@ interface SuratType {
 
 const SuratWrapper = ({ suratId }: Props) => {
   const router = useRouter();
+  const contentType = useSelector(
+    (state: RootState) => state.content.currentContentType
+  );
 
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["suratById", suratId],
@@ -33,16 +39,16 @@ const SuratWrapper = ({ suratId }: Props) => {
     },
   });
 
-  const { data: terjemahan } = useQuery({
-    queryKey: ["terjemahanSurat", suratId],
-    queryFn: async ({ signal }) => {
-      const response = await axios.get(
-        `https://quranapi.idn.sch.id/surah/${suratId}`,
-        { signal }
-      );
-      return response.data as TerjemahanSurat;
-    },
-  });
+  // const { data: terjemahan } = useQuery({
+  //   queryKey: ["terjemahanSurat", suratId],
+  //   queryFn: async ({ signal }) => {
+  //     const response = await axios.get(
+  //       `https://quranapi.idn.sch.id/surah/${suratId}`,
+  //       { signal }
+  //     );
+  //     return response.data as TerjemahanSurat;
+  //   },
+  // });
 
   const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -86,10 +92,10 @@ const SuratWrapper = ({ suratId }: Props) => {
 
   return (
     <>
-      {/* {isLoading && <p>Loading...</p>} */}
       <Button variant="outline" className="mb-4" onClick={buttonHandler}>
         Kembali
       </Button>
+      {isLoading && <LoadingSpinner />}
       {data?.verses.map((ayat, index) => (
         <Ayat
           key={ayat.id}
@@ -97,6 +103,7 @@ const SuratWrapper = ({ suratId }: Props) => {
           audioHandler={audioHandler}
           audioPlayed={audioPlayed}
           currentVerse={currentVerse}
+          contentType={contentType}
         />
       ))}
       <audio ref={audioRef} onEnded={audioStatusHandler}></audio>

@@ -7,10 +7,10 @@ import { PauseIcon, PlayIcon } from "lucide-react";
 
 interface Props {
   audioUrl: string;
-  currentVerse: number;
+  currentVerse?: number;
   verseNumber: number;
-  audioPlayed: boolean;
-  audioHandler: (verseNumber: number, audioUrl: string) => void;
+  audioPlayed?: boolean;
+  audioHandler?: (verseNumber: number, audioUrl: string) => void;
 }
 
 const AudioButton = ({
@@ -20,13 +20,12 @@ const AudioButton = ({
   audioPlayed,
   audioHandler,
 }: Props) => {
+  const clickHandler = () => {
+    audioHandler && audioHandler(verseNumber, audioUrl);
+  };
+
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      className="mb-4"
-      onClick={() => audioHandler(verseNumber, audioUrl)}
-    >
+    <Button variant="outline" size="sm" className="mb-4" onClick={clickHandler}>
       {currentVerse === verseNumber && audioPlayed ? (
         <PauseIcon />
       ) : (
