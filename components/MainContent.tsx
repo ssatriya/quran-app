@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { Separator } from "./ui/separator";
 import LoadingSpinner from "./LoadingSpinner";
 import Bookmark from "./Bookmark";
+import { Card } from "./ui/card";
 
 const MainContent = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -93,10 +94,7 @@ const MainContent = () => {
             {contentType === "juz" &&
               juz?.juzs.map((juz) => {
                 return (
-                  <div
-                    key={juz.id}
-                    className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 w-full"
-                  >
+                  <Card key={juz.id} className="p-3 border mb-2">
                     <div className="flex justify-between items-center">
                       <Link
                         href={`/juz/${juz.id}`}
@@ -118,7 +116,7 @@ const MainContent = () => {
                         return <Surat key={index} surat={suratFromJuz} />;
                       })}
                     </div>
-                  </div>
+                  </Card>
                 );
               })}
           </TabsContent>

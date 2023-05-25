@@ -16,6 +16,7 @@ import { AyatType } from "@/lib/type";
 import { useRef } from "react";
 import AudioButton from "./ayat-property/AudioButton";
 import BookmarkButton from "./ayat-property/BookmarkButton";
+import { Card } from "./ui/card";
 
 interface Props {
   ayat: AyatType;
@@ -39,8 +40,8 @@ const Ayat = ({
   }
 
   return (
-    <div
-      className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2"
+    <Card
+      className="p-3 mb-2 dark:bg-background dark:text-gray-300"
       ref={ayatRef}
     >
       <div className="flex justify-between">
@@ -100,7 +101,7 @@ const Ayat = ({
           );
         })}
       </div>
-    </div>
+    </Card>
   );
 };
 

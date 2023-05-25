@@ -1,7 +1,5 @@
 import React from "react";
-import axios, { AxiosError } from "axios";
 
-import { AyatType, AllJuz } from "@/lib/type";
 import JuzWrapper from "@/components/wrapper-content/JuzWrapper";
 
 interface Props {

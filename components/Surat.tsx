@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import { SuratsType } from "@/lib/type";
+import { Card } from "./ui/card";
 
 type Props = {
   surat?: SuratsType;
@@ -15,7 +16,7 @@ const Surat = ({ surat }: Props) => {
 
   return (
     <Link href={`/surat/${surat?.id}`} as={`/surat/${surat?.id}`}>
-      <div className="p-3 border border-slate-200 dark:border-accent rounded-md mb-2 hover:bg-accent hover:text-accent-foreground">
+      <Card className="p-3 border dark:bg-background dark:text-gray-300 rounded-md mb-2 hover:bg-accent hover:text-accent-foreground">
         <div className="flex justify-between items-center mb-6">
           <h2 className="font-semibold text-lg">{surat?.name_simple}</h2>
           <p className="font-semibold text-xl">{surat?.name_arabic}</p>
@@ -33,7 +34,7 @@ const Surat = ({ surat }: Props) => {
           </div>
           <div>{surat?.verses_count} Ayat</div>
         </div>
-      </div>
+      </Card>
     </Link>
   );
 };
