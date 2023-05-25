@@ -25,7 +25,13 @@ const AudioButton = ({
   };
 
   return (
-    <Button variant="outline" size="sm" className="mb-4" onClick={clickHandler}>
+    <Button
+      variant="outline"
+      size="sm"
+      className="mb-4"
+      onClick={clickHandler}
+      aria-label="play button"
+    >
       {currentVerse === verseNumber && audioPlayed ? (
         <PauseIcon />
       ) : (

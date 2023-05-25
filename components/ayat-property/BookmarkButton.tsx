@@ -38,7 +38,12 @@ const BookmarkButton = ({ verseKey }: Props) => {
   };
 
   return (
-    <Button variant="outline" size="sm" onClick={handleClick}>
+    <Button
+      variant="outline"
+      size="sm"
+      onClick={handleClick}
+      aria-label="bookmark button"
+    >
       <Bookmark
         fill={bookmarked.includes(verseKey) ? "purple" : "none"}
         className="cursor-pointer dark:text-white"
