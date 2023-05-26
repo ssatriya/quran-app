@@ -4,13 +4,10 @@ import React from "react";
 
 import { AyatType } from "@/lib/type";
 import Ayat from "../Ayat";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "../LoadingSpinner";
 import SkeletonAyat from "../skeleton-loading/skeleton-ayat";
 
 interface Props {

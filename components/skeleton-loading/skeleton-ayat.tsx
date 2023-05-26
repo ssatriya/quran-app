@@ -1,6 +1,5 @@
 import React from "react";
 import { Card } from "../ui/card";
-import { Separator } from "../ui/separator";
 
 interface Props {
   cards: number;

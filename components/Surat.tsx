@@ -1,5 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { Scheherazade_New } from "next/font/google";
+
+const scheherazadeNew = Scheherazade_New({
+  subsets: ["arabic"],
+  weight: "400",
+});
 
 import { SuratsType } from "@/lib/type";
 import { Card } from "./ui/card";
@@ -19,7 +25,9 @@ const Surat = ({ surat }: Props) => {
       <Card className="p-3 border dark:bg-background dark:text-gray-300 rounded-md mb-2 hover:bg-accent hover:text-accent-foreground">
         <div className="flex justify-between items-center mb-6">
           <h2 className="font-semibold text-lg">{surat?.name_simple}</h2>
-          <p className="font-semibold text-xl">{surat?.name_arabic}</p>
+          <p className={`font-semibold text-2xl ${scheherazadeNew.className}`}>
+            {surat?.name_arabic}
+          </p>
         </div>
         <div className="flex justify-between items-center gap-1 text-sm text-slate-500 dark:text-white dark:text-opacity-75">
           <div>

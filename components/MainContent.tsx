@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { SuratsType } from "@/lib/type";
+import { FetchSurat, SuratsType } from "@/lib/type";
 import { AppDispatch, RootState } from "@/store/store";
 import { fetchJuz, fetchSurat, setCurrentType } from "@/store/content-slice";
 import Surat from "./Surat";
@@ -14,8 +14,6 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Input } from "./ui/input";
 
-import { motion } from "framer-motion";
-import { Separator } from "./ui/separator";
 import LoadingSpinner from "./LoadingSpinner";
 import Bookmark from "./Bookmark";
 import { Card } from "./ui/card";
@@ -31,6 +29,12 @@ const MainContent = () => {
   const contentType = useSelector(
     (state: RootState) => state.content.currentContentType
   );
+  const [query, setQuery] = useState<string>("");
+
+  const filtered = surat?.chapters.filter((s) => {
+    const normalizeSurat = s.name_simple.toLowerCase().replace("-", "");
+    return normalizeSurat.includes(query);
+  });
 
   const switchHandler = (e: any) => {
     if (e === "surat") {
@@ -61,14 +65,14 @@ const MainContent = () => {
     }
   }, [contentStatus]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const input = e.target.value;
-  };
-
   return (
     <div>
       <div className="mb-3">
-        <Input type="text" id="search" onChange={handleSearch} />
+        <Input
+          type="text"
+          id="search"
+          onChange={(e) => setQuery(e.target.value)}
+        />
         <Label className="sr-only" htmlFor="search">
           search
         </Label>
@@ -85,9 +89,16 @@ const MainContent = () => {
           <TabsContent value="surat">
             <div className="grid desktop:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-3">
               {contentType === "surat" &&
-                surat?.chapters.map((surat: SuratsType) => {
-                  return <Surat key={surat.id} surat={surat} />;
-                })}
+                surat?.chapters
+                  .filter((s) => {
+                    const normalizeSurat = s.name_simple
+                      .toLowerCase()
+                      .replace("-", "");
+                    return normalizeSurat.includes(query);
+                  })
+                  .map((surat: SuratsType) => {
+                    return <Surat key={surat.id} surat={surat} />;
+                  })}
             </div>
           </TabsContent>
         )}

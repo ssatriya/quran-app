@@ -1,10 +1,6 @@
 "use client";
 
-// import React, { useEffect, useRef, useState } from "react";
 import { Scheherazade_New } from "next/font/google";
-import { useDispatch, useSelector } from "react-redux";
-
-import { Bookmark, PlayIcon, PauseIcon } from "lucide-react";
 
 const scheherazadeNew = Scheherazade_New({
   subsets: ["arabic"],

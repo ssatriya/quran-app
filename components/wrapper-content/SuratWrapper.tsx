@@ -1,16 +1,14 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Ayat from "../Ayat";
 import axios from "axios";
-import { AyatType, TerjemahanSurat } from "@/lib/type";
-import SkeletonLoading from "../SkeletonLoading";
+import { AyatType } from "@/lib/type";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import LoadingSpinner from "../LoadingSpinner";
 import SkeletonAyat from "../skeleton-loading/skeleton-ayat";
 
 interface Props {
@@ -23,6 +21,9 @@ interface SuratType {
 
 const SuratWrapper = ({ suratId }: Props) => {
   const router = useRouter();
+  const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [currentVerse, setCurrentVerse] = useState<number>(1);
   const contentType = useSelector(
     (state: RootState) => state.content.currentContentType
   );
@@ -39,21 +40,6 @@ const SuratWrapper = ({ suratId }: Props) => {
       return response.data as SuratType;
     },
   });
-
-  // const { data: terjemahan } = useQuery({
-  //   queryKey: ["terjemahanSurat", suratId],
-  //   queryFn: async ({ signal }) => {
-  //     const response = await axios.get(
-  //       `https://quranapi.idn.sch.id/surah/${suratId}`,
-  //       { signal }
-  //     );
-  //     return response.data as TerjemahanSurat;
-  //   },
-  // });
-
-  const [audioPlayed, setAudioPlayed] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [currentVerse, setCurrentVerse] = useState<number>(1);
 
   const audioHandler = async (verseNumber: number, audioUrl: string) => {
     setAudioPlayed((prev) => !prev);
@@ -75,6 +61,11 @@ const SuratWrapper = ({ suratId }: Props) => {
   };
 
   const audioStatusHandler = () => {
+    if (data?.verses.length === currentVerse) {
+      setAudioPlayed(false);
+      setCurrentVerse(1);
+      return;
+    }
     setCurrentVerse((prev) => ++prev);
     setAudioPlayed((prev) => !prev);
 
