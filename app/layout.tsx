@@ -19,12 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`min-h-[100%] ${inter.className}`}>
         <Container>
           <Providers>
             <Navbar />
             <main>{children}</main>
-            {/* <Footer /> */}
+            <Footer />
           </Providers>
         </Container>
       </body>

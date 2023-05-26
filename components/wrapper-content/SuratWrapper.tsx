@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import LoadingSpinner from "../LoadingSpinner";
+import SkeletonAyat from "../skeleton-loading/skeleton-ayat";
 
 interface Props {
   suratId: string;
@@ -95,7 +96,9 @@ const SuratWrapper = ({ suratId }: Props) => {
       <Button variant="outline" className="mb-4" onClick={buttonHandler}>
         Kembali
       </Button>
-      {isLoading && <LoadingSpinner />}
+      {/* {isLoading && <LoadingSpinner />} */}
+      {isLoading && <SkeletonAyat cards={8} />}
+      {/* <SkeletonAyat cards={8} /> */}
       {data?.verses.map((ayat, index) => (
         <Ayat
           key={ayat.id}

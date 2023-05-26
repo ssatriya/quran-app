@@ -4,7 +4,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="w-full h-16 flex justify-center items-center gap-4">
+    <footer className="w-full h-16 flex justify-center items-center gap-4 mt-auto">
       <Github />
       <Link href="https://github.com/ssatriya/quran-app" target="__blank">
         Github Repo

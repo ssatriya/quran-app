@@ -11,6 +11,7 @@ import axios from "axios";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import LoadingSpinner from "../LoadingSpinner";
+import SkeletonAyat from "../skeleton-loading/skeleton-ayat";
 
 interface Props {
   juzId: string;
@@ -45,7 +46,7 @@ const Juz = ({ juzId }: Props) => {
       <Button variant="outline" className="mb-4" onClick={buttonHandler}>
         Kembali
       </Button>
-      {isLoading && <LoadingSpinner />}
+      {isLoading && <SkeletonAyat cards={8} />}
       {data?.verses?.map((ayat) => (
         <Ayat key={ayat.id} ayat={ayat} />
       ))}

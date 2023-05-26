@@ -73,7 +73,7 @@ const MainContent = () => {
           search
         </Label>
       </div>
-      {/* <Bookmark /> */}
+      <Bookmark />
       <Tabs defaultValue={contentType} onValueChange={switchHandler}>
         <TabsList className="mb-4">
           <TabsTrigger value="surat">Surat</TabsTrigger>
