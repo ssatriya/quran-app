@@ -71,7 +71,7 @@ const MainContent = () => {
         <Input
           type="text"
           id="search"
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value.toLowerCase().trim())}
         />
         <Label className="sr-only" htmlFor="search">
           search
