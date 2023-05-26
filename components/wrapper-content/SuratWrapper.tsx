@@ -97,8 +97,8 @@ const SuratWrapper = ({ suratId }: Props) => {
         Kembali
       </Button>
       {/* {isLoading && <LoadingSpinner />} */}
-      {isLoading && <SkeletonAyat cards={8} />}
-      {/* <SkeletonAyat cards={8} /> */}
+      {/* {isLoading && <SkeletonAyat cards={8} />} */}
+      <SkeletonAyat cards={8} />
       {data?.verses.map((ayat, index) => (
         <Ayat
           key={ayat.id}
