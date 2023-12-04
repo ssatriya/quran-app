@@ -1,34 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Al-Quran App 🚀
 
-## Getting Started
+This is an Al-Quran app that use data from an Al-Quran API. Check out the API [documentation here](https://quran.api-docs.io/v4/getting-started/introduction).
 
-First, run the development server:
+## Features 🌟
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- **Surat & Juz:** Show Al-Quran per Surat or Juz using tab.
+- **Search Surat:** Search desired Surat.
+- **Dark Mode:** Switch between light and dark mode.
+- **Audio:** Listen per Ayah audio with auto scroll.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack 🛠️
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- [Nextjs](https://nextjs.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [Shadcn UI](https://ui.shadcn.com/docs)
+- [Tailwind CSS](https://tailwindcss.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## TODO 📝
 
-## Learn More
+- [ ] Complete bookmark functionality, currently only save the data in localstorage without showing it.
+- [ ] Add pagination for long Surat/Juz.
+- [ ] Add other languange option (based on API availability).
 
-To learn more about Next.js, take a look at the following resources:
+## Getting Started 🚀
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  Clone the repository:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```bash
+    git clone https://github.com/ssatriya/quran-app
 
-## Deploy on Vercel
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  Open the project:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    cd quran-app
+    npm install
+    ```
+
+3.  Start the project
+    ```bash
+    npm run dev
+    ```

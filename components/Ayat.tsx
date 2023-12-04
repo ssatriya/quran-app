@@ -10,9 +10,9 @@ const scheherazadeNew = Scheherazade_New({
 import { Separator } from "./ui/separator";
 import { AyatType } from "@/lib/type";
 import { useRef } from "react";
+import { Card } from "./ui/card";
 import AudioButton from "./ayat-property/AudioButton";
 import BookmarkButton from "./ayat-property/BookmarkButton";
-import { Card } from "./ui/card";
 
 interface Props {
   ayat: AyatType;
